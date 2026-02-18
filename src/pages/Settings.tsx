@@ -25,6 +25,13 @@ export default function SettingsPage() {
   const { language, settings, updateSettings } = useApp();
   const navigate = useNavigate();
 
+  const infoCards = [
+    { icon: "🌾", labelKey: "supportedCrops", valueKey: "supportedCropsValue" },
+    { icon: "🌍", labelKey: "languagesLabel", valueKey: "languagesValue" },
+    { icon: "📡", labelKey: "offlineSupport", valueKey: "offlineSupportValue" },
+    { icon: "🔒", labelKey: "dataPrivacy", valueKey: "dataPrivacyValue" },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Header */}
@@ -38,11 +45,11 @@ export default function SettingsPage() {
       <div className="flex-1 px-4 py-4 pb-28 flex flex-col gap-4">
         {/* App Logo Card */}
         <div className="bg-card rounded-2xl p-4 flex items-center gap-4">
-          <img src={logo} alt="AgroDhwani" className="w-14 h-14 rounded-2xl" />
+          <img src={logo} alt={t("appName", language)} className="w-14 h-14 rounded-2xl" />
           <div>
             <h2 className="text-foreground font-bold text-lg">{t("appName", language)}</h2>
             <p className="text-muted-foreground text-sm">{t("tagline", language)}</p>
-            <span className="text-xs text-primary font-semibold mt-1 inline-block">v1.0.0</span>
+            <span className="text-xs text-primary font-semibold mt-1 inline-block">{t("appVersion", language)}</span>
           </div>
         </div>
 
@@ -113,19 +120,14 @@ export default function SettingsPage() {
 
         {/* Info Cards */}
         <div className="bg-card rounded-2xl divide-y divide-border overflow-hidden">
-          {[
-            { icon: "🌾", label: "Supported Crops", value: "25+ crops" },
-            { icon: "🌍", label: "Languages", value: "English, हिंदी, తెలుగు" },
-            { icon: "📡", label: "Offline Support", value: "Full" },
-            { icon: "🔒", label: "Data Privacy", value: "Local only" },
-          ].map(({ icon, label, value }) => (
-            <div key={label} className="flex items-center justify-between p-4">
+          {infoCards.map(({ icon, labelKey, valueKey }) => (
+            <div key={labelKey} className="flex items-center justify-between p-4">
               <div className="flex items-center gap-3">
                 <span className="text-xl">{icon}</span>
-                <p className="text-foreground font-medium text-sm">{label}</p>
+                <p className="text-foreground font-medium text-sm">{t(labelKey, language)}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-xs">{value}</span>
+                <span className="text-muted-foreground text-xs">{t(valueKey, language)}</span>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
@@ -134,7 +136,7 @@ export default function SettingsPage() {
 
         {/* Footer */}
         <p className="text-center text-muted-foreground text-xs py-2">
-          AgroDhwani · Made for Farmers 🌿
+          {t("madeForFarmers", language)}
         </p>
       </div>
 

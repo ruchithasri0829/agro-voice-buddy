@@ -5,7 +5,7 @@ import { useApp } from "@/contexts/AppContext";
 import { t } from "@/lib/i18n";
 import { useSpeech } from "@/hooks/useSpeech";
 import { getChatHistory, saveChatMessage, clearChatHistory } from "@/lib/storage";
-import { generateFarmingResponse } from "@/lib/aiResponses";
+import { generateFarmingResponse, isEmergency } from "@/lib/aiResponses";
 import type { ChatMessage } from "@/lib/storage";
 import BottomNav from "@/components/BottomNav";
 
@@ -14,11 +14,25 @@ export default function VoiceAssistant() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showSOS, setShowSOS] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleUserResult = async (text: string) => {
     const userMsg = saveChatMessage({ role: "user", text });
     setMessages((prev) => [...prev, userMsg]);
+
+    // Check for emergency keyword
+    if (isEmergency(text)) {
+      setShowSOS(true);
+      const emergencyText = t("emergencyKeyword", language);
+      const assistantMsg = saveChatMessage({ role: "assistant", text: emergencyText });
+      setMessages((prev) => [...prev, assistantMsg]);
+      speech.setState("idle");
+      if (settings.voiceEnabled) {
+        speech.speak(emergencyText);
+      }
+      return;
+    }
 
     try {
       const { text: responseText } = await generateFarmingResponse(text, language);
@@ -102,10 +116,36 @@ export default function VoiceAssistant() {
           <ArrowLeft className="w-5 h-5 text-primary-foreground" />
         </button>
         <h1 className="text-primary-foreground font-bold text-lg">{t("assistant", language)}</h1>
-        <button onClick={handleClear} className="p-2 rounded-xl bg-primary-foreground/10">
+        <button onClick={handleClear} className="p-2 rounded-xl bg-primary-foreground/10" title={t("clear", language)}>
           <Trash2 className="w-5 h-5 text-primary-foreground/70" />
         </button>
       </div>
+
+      {/* SOS Emergency Overlay */}
+      {showSOS && (
+        <div className="fixed inset-0 bg-destructive/95 z-50 flex flex-col items-center justify-center p-6 gap-4">
+          <p className="text-white font-bold text-2xl text-center">{t("sosTitle", language)}</p>
+          <div className="w-full max-w-sm flex flex-col gap-3">
+            {(["sosAdvice1", "sosAdvice2", "sosAdvice3", "sosAdvice4"] as const).map((key) => (
+              <div key={key} className="bg-white/15 rounded-2xl p-4">
+                <p className="text-white text-sm leading-relaxed">{t(key, language)}</p>
+              </div>
+            ))}
+          </div>
+          <a
+            href={`tel:${t("sosHelplineNumber", language)}`}
+            className="bg-white text-destructive font-bold px-8 py-4 rounded-2xl text-lg mt-2"
+          >
+            📞 {t("sosEmergencyHelp", language)}: {t("sosHelplineNumber", language)}
+          </a>
+          <button
+            onClick={() => setShowSOS(false)}
+            className="text-white/70 underline text-sm mt-2"
+          >
+            {t("sosClose", language)}
+          </button>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-44 flex flex-col gap-3">

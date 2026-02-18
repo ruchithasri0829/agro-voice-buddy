@@ -51,7 +51,7 @@ export default function Home() {
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="Logo" className="w-10 h-10 rounded-xl" />
+              <img src={logo} alt={t("appName", language)} className="w-10 h-10 rounded-xl" />
               <div>
                 <h1 className="text-primary-foreground font-bold text-xl leading-tight">
                   {t("appName", language)}
@@ -62,7 +62,7 @@ export default function Home() {
             <div className="flex items-center gap-2">
               {!isOnline && (
                 <span className="bg-warning/20 text-warning px-2 py-1 rounded-full text-xs font-semibold">
-                  Offline
+                  {t("offline", language)}
                 </span>
               )}
               <LanguageSelector compact />
@@ -167,7 +167,7 @@ export default function Home() {
             </div>
             <div>
               <p className="text-destructive font-semibold text-sm">{t("weatherAlert", language)}</p>
-              <p className="text-foreground/70 text-sm mt-0.5">{weather.alert}</p>
+              <p className="text-foreground/70 text-sm mt-0.5">{t("heavyRain", language)}</p>
             </div>
           </div>
         )}
@@ -186,6 +186,37 @@ export default function Home() {
             className="bg-secondary text-secondary-foreground rounded-2xl p-4 font-semibold text-sm active:scale-95 transition-transform flex items-center justify-center gap-2"
           >
             ⚙️ {t("settings", language)}
+          </button>
+        </div>
+
+        {/* Wow Features Row */}
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={() => navigate("/crop-doctor")}
+            className="bg-card rounded-2xl shadow-sm p-3 flex flex-col items-center gap-1 active:scale-95 transition-transform"
+          >
+            <span className="text-2xl">🩺</span>
+            <span className="text-xs font-semibold text-foreground text-center leading-tight">
+              {t("cropDoctor", language)}
+            </span>
+          </button>
+          <button
+            onClick={() => navigate("/irrigation-advice")}
+            className="bg-card rounded-2xl shadow-sm p-3 flex flex-col items-center gap-1 active:scale-95 transition-transform"
+          >
+            <span className="text-2xl">💧</span>
+            <span className="text-xs font-semibold text-foreground text-center leading-tight">
+              {t("irrigationRec", language)}
+            </span>
+          </button>
+          <button
+            onClick={() => navigate("/sos")}
+            className="bg-destructive/10 border border-destructive/20 rounded-2xl shadow-sm p-3 flex flex-col items-center gap-1 active:scale-95 transition-transform"
+          >
+            <span className="text-2xl">🚨</span>
+            <span className="text-xs font-semibold text-destructive text-center leading-tight">
+              {t("sos", language)}
+            </span>
           </button>
         </div>
       </div>
