@@ -9,6 +9,9 @@ import Home from "./pages/Home";
 import VoiceAssistant from "./pages/VoiceAssistant";
 import Reminders from "./pages/Reminders";
 import Settings from "./pages/Settings";
+import CropDoctor from "./pages/CropDoctor";
+import IrrigationAdvice from "./pages/IrrigationAdvice";
+import SOS from "./pages/SOS";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +29,9 @@ const App = () => (
             <Route path="/assistant" element={<VoiceAssistant />} />
             <Route path="/reminders" element={<Reminders />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/crop-doctor" element={<CropDoctor />} />
+            <Route path="/irrigation-advice" element={<IrrigationAdvice />} />
+            <Route path="/sos" element={<SOS />} />
             <Route path="/index" element={<Navigate to="/" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

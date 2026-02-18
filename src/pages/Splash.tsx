@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useApp } from "@/contexts/AppContext";
+import { t } from "@/lib/i18n";
 import logo from "@/assets/logo.png";
 
 export default function Splash() {
   const navigate = useNavigate();
+  const { language } = useApp();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export default function Splash() {
           <div className="absolute inset-0 rounded-full bg-gold opacity-20 blur-xl scale-150" />
           <img
             src={logo}
-            alt="AgroDhwani Logo"
+            alt={t("appName", language)}
             className="w-28 h-28 rounded-3xl shadow-lg relative z-10"
           />
         </div>
@@ -38,7 +41,7 @@ export default function Splash() {
         {/* App Name */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-primary-foreground tracking-tight">
-            AgroDhwani
+            {t("appName", language)}
           </h1>
           <p className="text-primary-foreground/70 text-lg mt-1 font-medium">
             एग्रोध्वनि • అగ్రోధ్వని
@@ -47,7 +50,12 @@ export default function Splash() {
 
         {/* Tagline */}
         <p className="text-primary-foreground/60 text-center text-sm px-8 max-w-xs">
-          Smart AI Voice Assistant for Farmers
+          {t("splashTagline", language)}
+        </p>
+
+        {/* Subtitle */}
+        <p className="text-primary-foreground/40 text-center text-xs">
+          {t("splashSubtitle", language)}
         </p>
 
         {/* Loading dots */}
