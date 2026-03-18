@@ -65,7 +65,7 @@ export default function RecruiterDashboard() {
   };
 
   const filtered = candidates?.filter((c) => {
-    const name = (c as any).profiles?.full_name?.toLowerCase() ?? "";
+    const name = (c as any).profile?.full_name?.toLowerCase() ?? "";
     const matchSearch = name.includes(search.toLowerCase()) || c.role.toLowerCase().includes(search.toLowerCase());
     const matchScore = minScore ? (c.overall_score ?? 0) >= Number(minScore) : true;
     return matchSearch && matchScore;
