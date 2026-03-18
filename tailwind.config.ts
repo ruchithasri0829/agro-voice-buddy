@@ -24,15 +24,15 @@ export default {
           dark: "hsl(var(--primary-dark))",
           glow: "hsl(var(--primary-glow))",
         },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
         gold: {
           DEFAULT: "hsl(var(--gold))",
           foreground: "hsl(var(--gold-foreground))",
           light: "hsl(var(--gold-light))",
           muted: "hsl(var(--gold-muted))",
-        },
-        earth: {
-          DEFAULT: "hsl(var(--earth))",
-          light: "hsl(var(--earth-light))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -53,10 +53,6 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -85,16 +81,15 @@ export default {
         "2xl": "calc(var(--radius) + 12px)",
       },
       fontFamily: {
-        sans: ["Noto Sans", "Noto Sans Devanagari", "sans-serif"],
-      },
-      fontSize: {
-        "2xs": "0.625rem",
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
-        gold: "var(--shadow-gold)",
+        glow: "var(--shadow-glow)",
+        accent: "var(--shadow-accent)",
       },
       keyframes: {
         "accordion-down": {
@@ -105,20 +100,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        "spin-slow": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 3s ease-in-out infinite",
-        "spin-slow": "spin-slow 8s linear infinite",
       },
     },
   },
