@@ -1,0 +1,7 @@
+project_id = "yekepibpzqvwetojqqog"
+
+[functions.generate-question]
+verify_jwt = false
+
+[functions.analyze-interview]
+verify_jwt = false
