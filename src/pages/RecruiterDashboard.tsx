@@ -23,11 +23,19 @@ export default function RecruiterDashboard() {
   const { data: candidates, isLoading } = useQuery({
     queryKey: ["all-candidates"],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: interviews } = await supabase
         .from("interviews")
-        .select("*, profiles!interviews_user_id_fkey(full_name, email, resume_url)")
+        .select("*")
         .eq("status", "completed")
         .order("overall_score", { ascending: false });
+      if (!interviews?.length) return [];
+      const userIds = [...new Set(interviews.map((i) => i.user_id))];
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("user_id, full_name, email, resume_url")
+        .in("user_id", userIds);
+      const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) ?? []);
+      const data = interviews.map((i) => ({ ...i, profile: profileMap.get(i.user_id) ?? null }));
       return data ?? [];
     },
   });
