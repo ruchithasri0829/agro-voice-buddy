@@ -157,8 +157,8 @@ export default function RecruiterDashboard() {
                   <div className="flex items-center gap-4">
                     <span className="text-lg font-bold text-muted-foreground w-8">#{rank + 1}</span>
                     <div>
-                      <p className="font-medium">{(c as any).profiles?.full_name || "Unknown"}</p>
-                      <p className="text-xs text-muted-foreground">{c.role} • {c.difficulty} • {(c as any).profiles?.email}</p>
+                      <p className="font-medium">{(c as any).profile?.full_name || "Unknown"}</p>
+                      <p className="text-xs text-muted-foreground">{c.role} • {c.difficulty} • {(c as any).profile?.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
